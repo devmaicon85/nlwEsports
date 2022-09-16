@@ -1,0 +1,82 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities; /*ultimo*/
+
+:root {
+    --color-primary: green;
+    --color-danger: #ce0000;
+}
+
+@layer components {
+    html,
+    body,
+    #__next {
+        @apply flex flex-col min-h-screen text-gray-800 dark:text-gray-100 bg-gray-50 dark:bg-gray-900;
+    }
+
+    body {
+        font-family: Inter, Arial, Helvetica, sans-serif;
+    }
+
+    .btn {
+        @apply flex flex-1 gap-2 justify-center items-center px-4 h-[42px] text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-opacity-70 hover:scale-[98%] rounded-[4px] transition ease-in duration-75;
+    }
+
+    .btn-default {
+        @apply text-gray-500 bg-transparent border dark:hover:brightness-90 dark:focus:ring-gray-600 focus:ring-gray-500 dark:hover:bg-transparent hover:bg-transparent dark:bg-transparent;
+    }
+
+    .btn-link {
+        @apply text-primary focus:ring-white hover:brightness-90 px-4 h-12 text-sm font-medium focus:outline-none focus:ring-0 focus:ring-offset-2 focus:ring-opacity-70 hover:scale-[98%] rounded-[4px] transition ease-in duration-75;
+    }
+
+    .btn-primary {
+        @apply text-white text-opacity-95 bg-primary focus:ring-primary;
+    }
+
+    .btn-danger {
+        @apply text-white bg-danger focus:ring-danger;
+    }
+
+    .btn-mini {
+        @apply h-5 transition duration-75 ease-in border-0 hover:scale-125;
+    }
+
+    .input {
+        @apply block w-full p-4 text-sm border outline-none placeholder:opacity-70 placeholder:h-7 focus:ring-0 disabled:opacity-60;
+    }
+
+    .input-primary {
+        @apply text-gray-600 border-gray-300 rounded-sm bg-gray-50 focus:ring-primary focus:border-primary dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary dark:focus:border-primary;
+    }
+
+    .checkbox {
+        @apply w-10 dark:hover:bg-green-700 dark:text-green-700 dark:focus:bg-green-700;
+    }
+
+    .icon-input {
+        @apply inline-flex items-center px-3 text-sm text-gray-500 bg-white border-t border-b border-l border-gray-300 shadow-sm rounded-l-md dark:bg-gray-600 dark:border-gray-600 dark:text-gray-300;
+    }
+}
+
+/* width */
+::-webkit-scrollbar {
+    height: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: rgba(90, 90, 90, 0.3);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(90, 90, 90, 0.6);
+    cursor: pointer;
+}
