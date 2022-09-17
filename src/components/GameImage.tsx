@@ -6,7 +6,7 @@ interface Props {
     adsCount: number;
     handleClick: () => void;
 }
-export function GameBanner({ bannerUrl, title, adsCount, handleClick }: Props) {
+export function GameImage({ bannerUrl, title, adsCount, handleClick }: Props) {
 
     if(!bannerUrl) return <></>
     return (

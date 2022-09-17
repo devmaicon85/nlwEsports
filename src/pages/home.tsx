@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import axios from "../lib/axios";
 import Image from "next/image";
-import { GameBanner } from "@/components/GameBanner";
+import { GameImage } from "@/components/GameImage";
 import { BannerHome } from "@/components/BannerHome";
 import { GameModal } from "@/components/GameModal";
 import "keen-slider/keen-slider.min.css";
@@ -51,12 +51,13 @@ function Home({ games }: Props) {
                     slides: { perView: 6.5, spacing: 10 },
                 },
             },
-            mode: "snap",
+            mode: "free",
             slides: { origin: "center", perView: 5.5, spacing: 10 },
-            range: {
-                min: -5,
-                max: 5,
-            },
+            // range: {
+            //     min: 1,
+            //     max: 100,
+            //     align: true,
+            // },
         },
         [
             // add plugins here
@@ -71,7 +72,7 @@ function Home({ games }: Props) {
 
     if (!games) return <></>;
     return (
-        <div className="bg-[#121214] bg-galaxy bg-[100%] md:bg-cover bg-no-repeat bg-top w-full min-h-screen">
+        <div className="bg-[#121214] bg-galaxy bg-[length:100%] md:bg-cover bg-no-repeat bg-top w-full min-h-screen">
             <div className="max-w-[1344px] mx-auto px-4 sm:px-8 md:px-10 flex items-center flex-col my-10 mb-20">
                 <Image
                     src="/assets/logo.png"
@@ -92,7 +93,7 @@ function Home({ games }: Props) {
                 <div ref={sliderRef} className="keen-slider">
                     {games.map((game) => (
                         <div key={game.id} className="keen-slider__slide">
-                            <GameBanner
+                            <GameImage
                                 bannerUrl={game.bannerUrl}
                                 title={game.title}
                                 adsCount={game._count.ads}
@@ -107,7 +108,7 @@ function Home({ games }: Props) {
                     open={!!gameSelected?.id}
                     onOpenChange={() => setGameSelected(undefined)}
                 >
-                    <GameModal gameSelected={gameSelected} />
+                    <GameModal gameSelected={gameSelected}  />
                 </Dialog.Root>
             </div>
         </div>

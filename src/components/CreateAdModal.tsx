@@ -14,16 +14,17 @@ import { useSession } from "next-auth/react";
 
 interface Props {
     game: Game;
+    handleClose:()=>void
 }
-export function CreateAdModal({ game }: Props) {
+export function CreateAdModal({ game, handleClose }: Props) {
     // const [games, setGames] = useState<Game[]>([]);
+    const { data: session, status } = useSession();
     const [weekDays, SetWeekDays] = useState<string[]>([]);
     const [useVoiceChannel, setUseVoiceChannel] = useState(false);
-
-    const { data: session, status } = useSession();
-
-
-
+    const [userName, setUserName] = useState<string>(session?.user.name || "");
+    const [userDiscord, setUserDiscord] = useState<string>(
+        session?.user.username || ""
+    );
 
     const router = useRouter();
     // useEffect(() => {
@@ -70,6 +71,9 @@ export function CreateAdModal({ game }: Props) {
             });
 
             alert("Anúncio criado com sucesso");
+            router.push('/home')
+            handleClose();
+            
         } catch (error) {
             console.log(error);
             alert("Erro ao criar anúncio");
@@ -99,14 +103,17 @@ export function CreateAdModal({ game }: Props) {
                                     name="name"
                                     type="text"
                                     placeholder="Como te chamam dentro do game?"
-                                    value={session?.user.name ?? ""}
+                                    value={userName}
+                                    onChange={(e)=>setUserName(e.target.value)}
                                 />
                             </div>
 
                             <div className="grid grid-cols-1 gap-6 my-3 lg:grid-cols-2">
                                 <div className="flex flex-col gap-2">
                                     <Label htmlFor="yearsPlaying">
-                                        <span className="truncate">Joga há quantos anos?</span>
+                                        <span className="truncate">
+                                            Joga há quantos anos?
+                                        </span>
                                     </Label>
                                     <Input
                                         name="yearsPlaying"
@@ -124,7 +131,8 @@ export function CreateAdModal({ game }: Props) {
                                         name="discord"
                                         type="text"
                                         placeholder="Usuario#0000"
-                                        value={(session?.user.username) ?? ""}
+                                        value={userDiscord}
+                                        onChange={(e)=>setUserDiscord(e.target.value)}
                                     />
                                 </div>
                             </div>
@@ -138,7 +146,7 @@ export function CreateAdModal({ game }: Props) {
                                         onValueChange={SetWeekDays}
                                         value={weekDays}
                                         type="multiple"
-                                        className={`grid grid-cols-7 gap-1 `}
+                                        className={`grid grid-cols-7 gap-1 mx-2 `}
                                     >
                                         <ToggleGroup.Item
                                             value="0"
@@ -242,7 +250,7 @@ export function CreateAdModal({ game }: Props) {
                                 </div>
                             </div>
 
-                            <label className="flex items-center gap-2 my-5 mt-6 text-xs text-white md:text-sm">
+                            <label className="flex items-center gap-2 mx-2 my-5 mt-6 text-xs text-white md:text-sm">
                                 <Checkbox.Root
                                     checked={useVoiceChannel}
                                     onCheckedChange={(checked) => {

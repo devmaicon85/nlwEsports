@@ -25,6 +25,8 @@ interface Ads {
 export function GameModal({ gameSelected }: Props) {
     const [ads, setAds] = useState<Ads[]>([]);
 
+    const [modalCreateAd, setModalCreateAd] = useState(false);
+
     useEffect(() => {
         if (!gameSelected) {
             setAds([]);
@@ -117,7 +119,10 @@ export function GameModal({ gameSelected }: Props) {
                 </main>
 
                 <footer className="flex flex-col items-end justify-between gap-4 mt-2 ">
-                    <Dialog.Root>
+                    <Dialog.Root
+                        open={modalCreateAd ===true}
+                        onOpenChange={() => setModalCreateAd(!modalCreateAd)}
+                    >
                         <div className="self-stretch w-full h-1 mt-4 bg-nlw-gradient"></div>
 
                         <div className="bg-[#2A2634] px-2 sm:px-4 grid  w-full gap-2 sm:grid-cols-2  ">
@@ -137,7 +142,10 @@ export function GameModal({ gameSelected }: Props) {
                             </div>
                         </div>
 
-                        <CreateAdModal game={gameSelected} />
+                        <CreateAdModal
+                            game={gameSelected}
+                            handleClose={() => setModalCreateAd(false)}
+                        />
                     </Dialog.Root>
                 </footer>
             </Dialog.Content>
