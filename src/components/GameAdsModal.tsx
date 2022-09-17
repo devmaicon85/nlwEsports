@@ -124,7 +124,7 @@ export function GameAdsModal({ gameSelected }: Props) {
                             </div>
                         </div>
 
-                        <CreateAdModal gameId={gameSelected.id} />
+                        <CreateAdModal game={gameSelected} />
                     </Dialog.Root>
                 </footer>
             </Dialog.Content>

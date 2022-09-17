@@ -8,20 +8,22 @@ import { useState } from "react";
 import * as ToggleGroup from "@radix-ui/react-toggle-group";
 import axios from "@/lib/axios";
 import { Game } from "../pages/home";
+import { Router, useRouter } from "next/router";
 
 interface Props {
-    gameId?: string;
+    game: Game;
 }
-export function CreateAdModal({ gameId }: Props) {
-    const [games, setGames] = useState<Game[]>([]);
+export function CreateAdModal({ game }: Props) {
+    // const [games, setGames] = useState<Game[]>([]);
     const [weekDays, SetWeekDays] = useState<string[]>([]);
     const [useVoiceChannel, setUseVoiceChannel] = useState(false);
 
-    useEffect(() => {
-        axios("/games").then((response) => {
-            setGames(response.data);
-        });
-    }, []);
+    const router = useRouter();
+    // useEffect(() => {
+    //     axios("/games").then((response) => {
+    //         setGames(response.data);
+    //     });
+    // }, []);
 
     async function handleCreateAd(event: FormEvent) {
         event.preventDefault();
@@ -34,7 +36,7 @@ export function CreateAdModal({ gameId }: Props) {
         // console.log("weekDays....", weekDays);
         // console.log("useVoiceChannel....", useVoiceChannel);
 
-        if (!data.game) {
+        if (!game.id) {
             return alert("game é obrigatório");
         }
 
@@ -50,7 +52,7 @@ export function CreateAdModal({ gameId }: Props) {
         }
 
         try {
-            await axios.post(`/games/${data.game}/ads`, {
+            await axios.post(`/games/${game.id}/ads`, {
                 name: data.name,
                 discord: data.discord,
                 weekDays: weekDays.map(Number),
@@ -61,6 +63,7 @@ export function CreateAdModal({ gameId }: Props) {
             });
 
             alert("Anúncio criado com sucesso");
+            router.push("/home");
         } catch (error) {
             console.log(error);
             alert("Erro ao criar anúncio");
@@ -71,19 +74,21 @@ export function CreateAdModal({ gameId }: Props) {
         <Dialog.Portal>
             <Dialog.Overlay className="fixed inset-0 bg-black/60" />
             <Dialog.Content className="bg-[#2a2634] shadow-2xl shadow-black/50 fixed py-8 max-w-[480px] w-full rounded-lg px-4 md:px-10 text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                <Dialog.Title className="text-xl font-black text-white md:text-2xl">
-                    Publique um anúncio
+                <Dialog.Title className="text-sm font-black text-white sm:text-base ">
+                    Publique seu anúncio
                 </Dialog.Title>
+                <div className="text-3xl font-black text-transparent bg-nlw-gradient bg-clip-text">{game.title}</div>
                 <form
                     onSubmit={handleCreateAd}
-                    className="flex flex-col gap-4 mt-4"
+                    className="flex flex-col gap-4"
                 >
                     <div className="flex flex-col gap-2">
-                        <select
+                        
+                        {/* <select
                             defaultValue={gameId}
                             id="game"
                             name="game"
-                            hidden
+                            disabled
                             className="px-4 py-3 text-base text-white rounded appearance-none bg-zinc-900"
                         >
                             <option value="">
@@ -94,7 +99,7 @@ export function CreateAdModal({ gameId }: Props) {
                                     {game.title}
                                 </option>
                             ))}
-                        </select>
+                        </select> */}
                     </div>
 
                     <div className="flex flex-col gap-2">

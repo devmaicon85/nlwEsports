@@ -58,10 +58,10 @@ function Home() {
                         />
                     ))}
                 </div>
-                <Dialog.Root>
+                {/* <Dialog.Root> */}
                     <CreateAdBanner />
-                    <CreateAdModal />
-                </Dialog.Root>
+                    {/* <CreateAdModal /> */}
+                {/* </Dialog.Root> */}
 
                 <Dialog.Root
                     open={!!gameSelected?.id}
