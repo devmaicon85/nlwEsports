@@ -8,6 +8,8 @@ import { BannerHome } from "@/components/BannerHome";
 import { GameModal } from "@/components/GameModal";
 import "keen-slider/keen-slider.min.css";
 import { useKeenSlider } from "keen-slider/react"; // import from 'keen-slider/react.es' for to get an ES module
+import { games } from "@/lib/api/public/games";
+import { GetServerSideProps } from "next";
 
 export interface Game {
     id: string;
@@ -17,13 +19,18 @@ export interface Game {
         ads: number;
     };
 }
-function Home() {
-    const [games, setGames] = useState<Game[]>([]);
+
+interface Props {
+    games: Game[];
+}
+
+function Home({ games }: Props) {
+    // const [games, setGames] = useState<Game[]>([]);
     const [gameSelected, setGameSelected] = useState<Game>();
 
     const [sliderRef, instanceRef] = useKeenSlider(
         {
-            loop:true,
+            loop: true,
             breakpoints: {
                 "(min-width: 200px)": {
                     slides: { perView: 2.2, spacing: 5 },
@@ -45,23 +52,22 @@ function Home() {
                 },
             },
             mode: "snap",
-            slides: { origin: "center", perView: 2.5, spacing: 10 },
+            slides: { origin: "center", perView: 5.5, spacing: 10 },
             range: {
                 min: -5,
                 max: 5,
             },
-            
         },
         [
             // add plugins here
         ]
     );
 
-    useEffect(() => {
-        axios("/games").then((response) => {
-            setGames(response.data);
-        });
-    }, []);
+    // useEffect(() => {
+    //     axios("/games").then((response) => {
+    //         setGames(response.data);
+    //     });
+    // }, []);
 
     return (
         <div className="bg-[#121214] bg-galaxy bg-[100%] md:bg-cover bg-no-repeat bg-top w-full min-h-screen">
@@ -108,3 +114,27 @@ function Home() {
 }
 
 export default Home;
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+    try {
+        const host = `http://${ctx.req.headers.host}/api/games`;
+        const games = (await axios.get(`${host}`)).data;
+
+        return {
+            props: {
+                games: JSON.parse(JSON.stringify(games)),
+            },
+        };
+    } catch (error) {
+        console.log(
+            "🚀 ~ file: home.tsx ~ line 126 ~ constgetServerSideProps:GetServerSideProps= ~ error",
+            error
+        );
+        return {
+            redirect: {
+                destination: "/404",
+                permanent: false,
+            },
+        };
+    }
+};
