@@ -69,6 +69,7 @@ function Home({ games }: Props) {
     //     });
     // }, []);
 
+    if (!games) return <></>;
     return (
         <div className="bg-[#121214] bg-galaxy bg-[100%] md:bg-cover bg-no-repeat bg-top w-full min-h-screen">
             <div className="max-w-[1344px] mx-auto px-4 sm:px-8 md:px-10 flex items-center flex-col my-10 mb-20">
