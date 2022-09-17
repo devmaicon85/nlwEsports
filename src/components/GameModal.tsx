@@ -2,7 +2,7 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { useEffect, useState } from "react";
 import { MagnifyingGlassPlus, X } from "phosphor-react";
 import { LabelValue } from "./LabelValue";
-import { CreateAdBanner } from "./CreateAdBannerl";
+import { BannerHome } from "./BannerHome";
 import { CreateAdModal } from "./CreateAdModal";
 import Image from "next/image";
 import { Game } from "pages/home";
@@ -22,7 +22,7 @@ interface Ads {
     hourEnd: string;
 }
 
-export function GameAdsModal({ gameSelected }: Props) {
+export function GameModal({ gameSelected }: Props) {
     const [ads, setAds] = useState<Ads[]>([]);
 
     useEffect(() => {

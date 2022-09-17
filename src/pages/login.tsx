@@ -44,32 +44,7 @@ export default function Login() {
     //     }
     // }, [router]);
 
-    async function handleSignInCredentials(
-        e: React.FormEvent<HTMLFormElement>
-    ) {
-        e.preventDefault();
-
-        setIsLogging(true);
-        setLoginError("");
-
-        const status: any = await signIn("credentials", {
-            email,
-            password,
-            callbackUrl:
-                router?.query?.callbackUrl &&
-                String(router?.query?.callbackUrl),
-            redirect: true,
-        });
-
-        if (status?.error) {
-            setLoginError(status.error);
-            setIsLogging(false);
-        }
-        if (status?.url) {
-            router.push(status.url);
-        }
-    }
-
+   
     const { data: session, status } = useSession();
 
   

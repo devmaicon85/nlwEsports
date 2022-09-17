@@ -1,4 +1,3 @@
-import { ThemeButton } from "@/components/ThemeButton";
 import Link from "next/link";
 
 export default function Erro404() {
@@ -274,7 +273,6 @@ export default function Erro404() {
                             <div className="p-2 mb-4 text-xl text-primary md:text-3xl">
                                 Página não encontrada
                             </div>
-                            <ThemeButton />
                         </div>
                         <Link href="/">
                             <a className="btn-link">Voltar pra Home</a>

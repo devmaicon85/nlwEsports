@@ -29,7 +29,8 @@ const nextConfig = {
             "abs.twimg.com",
             "pbs.twimg.com",
             "avatars.githubusercontent.com",
-            "static-cdn.jtvnw.net"
+            "static-cdn.jtvnw.net",
+            "cdn.discordapp.com",
         ],
     },
 };

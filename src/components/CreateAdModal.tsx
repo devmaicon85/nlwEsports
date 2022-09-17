@@ -10,6 +10,7 @@ import axios from "@/lib/axios";
 import { Game } from "../pages/home";
 import { Router, useRouter } from "next/router";
 import { Label } from "./Form/Label";
+import { useSession } from "next-auth/react";
 
 interface Props {
     game: Game;
@@ -18,6 +19,11 @@ export function CreateAdModal({ game }: Props) {
     // const [games, setGames] = useState<Game[]>([]);
     const [weekDays, SetWeekDays] = useState<string[]>([]);
     const [useVoiceChannel, setUseVoiceChannel] = useState(false);
+
+    const { data: session, status } = useSession();
+
+
+
 
     const router = useRouter();
     // useEffect(() => {
@@ -93,6 +99,7 @@ export function CreateAdModal({ game }: Props) {
                                     name="name"
                                     type="text"
                                     placeholder="Como te chamam dentro do game?"
+                                    value={session?.user.name ?? ""}
                                 />
                             </div>
 
@@ -117,6 +124,7 @@ export function CreateAdModal({ game }: Props) {
                                         name="discord"
                                         type="text"
                                         placeholder="Usuario#0000"
+                                        value={(session?.user.username) ?? ""}
                                     />
                                 </div>
                             </div>

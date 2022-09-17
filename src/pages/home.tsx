@@ -1,14 +1,11 @@
 import { useEffect, useState } from "react";
 
 import * as Dialog from "@radix-ui/react-dialog";
-import { GameController, MagnifyingGlassPlus } from "phosphor-react";
-import { Input } from "@/components/Form/Input";
-import { CreateAdModal } from "@/components/CreateAdModal";
-import { CreateAdBanner } from "@/components/CreateAdBannerl";
-import { GameAdsModal } from "@/components/GameAdsModal";
 import axios from "../lib/axios";
 import Image from "next/image";
 import { GameBanner } from "@/components/GameBanner";
+import { BannerHome } from "@/components/BannerHome";
+import { GameModal } from "@/components/GameModal";
 
 export interface Game {
     id: string;
@@ -58,13 +55,13 @@ function Home() {
                         />
                     ))}
                 </div>
-                <CreateAdBanner />
+                <BannerHome />
 
                 <Dialog.Root
                     open={!!gameSelected?.id}
                     onOpenChange={() => setGameSelected(undefined)}
                 >
-                    <GameAdsModal gameSelected={gameSelected} />
+                    <GameModal gameSelected={gameSelected} />
                 </Dialog.Root>
             </div>
         </div>
