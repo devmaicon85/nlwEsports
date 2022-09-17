@@ -9,6 +9,7 @@ import * as ToggleGroup from "@radix-ui/react-toggle-group";
 import axios from "@/lib/axios";
 import { Game } from "../pages/home";
 import { Router, useRouter } from "next/router";
+import { Label } from "./Form/Label";
 
 interface Props {
     game: Game;
@@ -63,7 +64,6 @@ export function CreateAdModal({ game }: Props) {
             });
 
             alert("Anúncio criado com sucesso");
-            router.push("/home");
         } catch (error) {
             console.log(error);
             alert("Erro ao criar anúncio");
@@ -73,227 +73,198 @@ export function CreateAdModal({ game }: Props) {
     return (
         <Dialog.Portal>
             <Dialog.Overlay className="fixed inset-0 bg-black/60" />
-            <Dialog.Content className="bg-[#2a2634] shadow-2xl shadow-black/50 fixed py-8 max-w-[480px] w-full rounded-lg px-4 md:px-10 text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                <Dialog.Title className="text-sm font-black text-white sm:text-base ">
-                    Publique seu anúncio
-                </Dialog.Title>
-                <div className="text-3xl font-black text-transparent bg-nlw-gradient bg-clip-text">{game.title}</div>
-                <form
-                    onSubmit={handleCreateAd}
-                    className="flex flex-col gap-4"
-                >
-                    <div className="flex flex-col gap-2">
-                        
-                        {/* <select
-                            defaultValue={gameId}
-                            id="game"
-                            name="game"
-                            disabled
-                            className="px-4 py-3 text-base text-white rounded appearance-none bg-zinc-900"
-                        >
-                            <option value="">
-                                Selecione o game que deseja jogar
-                            </option>
-                            {games.map((game) => (
-                                <option key={game.id} value={game.id}>
-                                    {game.title}
-                                </option>
-                            ))}
-                        </select> */}
-                    </div>
+            <Dialog.Content className="bg-[#2a2634] shadow-2xl shadow-black/50   fixed py-8 max-w-[480px] w-full rounded-lg px-4 md:px-10 text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                <form onSubmit={handleCreateAd} className="flex flex-col gap-4">
+                    <main className="flex flex-col max-h-[60vh] gap-4 overflow-y-auto">
+                        <Dialog.Title className="text-sm font-black text-white sm:text-base ">
+                            Publique seu anúncio
+                            <div className="text-3xl font-black text-transparent bg-nlw-gradient bg-clip-text">
+                                {game.title}
+                            </div>
+                        </Dialog.Title>
 
-                    <div className="flex flex-col gap-2">
-                        <label className="text-xs md:text-base" htmlFor="name">
-                            Seu nome (ou nickname)?
-                        </label>
-                        <Input
-                            id="name"
-                            name="name"
-                            type="text"
-                            placeholder="Como te chamam dentro do game?"
-                        />
-                    </div>
+                        <div className="mr-4">
+                            <div className="flex flex-col gap-2 my-3">
+                                <Label htmlFor="name">
+                                    Seu nome (ou nickname)?
+                                </Label>
+                                <Input
+                                    id="name"
+                                    name="name"
+                                    type="text"
+                                    placeholder="Como te chamam dentro do game?"
+                                />
+                            </div>
 
-                    <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                        <div className="flex flex-col gap-2">
-                            <label
-                                className="text-xs md:text-base"
-                                htmlFor="yearsPlaying"
-                            >
-                                Joga há quantos anos?
+                            <div className="grid grid-cols-1 gap-6 my-3 lg:grid-cols-2">
+                                <div className="flex flex-col gap-2">
+                                    <Label htmlFor="yearsPlaying">
+                                        <span className="truncate">Joga há quantos anos?</span>
+                                    </Label>
+                                    <Input
+                                        name="yearsPlaying"
+                                        id="yearsPlaying"
+                                        type="number"
+                                        placeholder="Tudo bem ser Zero"
+                                    />
+                                </div>
+                                <div className="flex flex-col gap-2">
+                                    <Label htmlFor="discord">
+                                        Qual seu Discord?
+                                    </Label>
+                                    <Input
+                                        id="discord"
+                                        name="discord"
+                                        type="text"
+                                        placeholder="Usuario#0000"
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="flex gap-6">
+                                <div className="flex flex-col gap-2 my-3">
+                                    <Label htmlFor="weekDays">
+                                        Quando costuma jogar?
+                                    </Label>
+                                    <ToggleGroup.Root
+                                        onValueChange={SetWeekDays}
+                                        value={weekDays}
+                                        type="multiple"
+                                        className={`grid grid-cols-7 gap-1 `}
+                                    >
+                                        <ToggleGroup.Item
+                                            value="0"
+                                            className={`h-8 w-8 rounded-lg  ${
+                                                weekDays.includes("0")
+                                                    ? "bg-violet-500"
+                                                    : "bg-zinc-900"
+                                            }`}
+                                            title="Domingo"
+                                        >
+                                            D
+                                        </ToggleGroup.Item>
+                                        <ToggleGroup.Item
+                                            value="1"
+                                            className={`h-8 w-8 rounded-lg  ${
+                                                weekDays.includes("1")
+                                                    ? "bg-violet-500"
+                                                    : "bg-zinc-900"
+                                            }`}
+                                            title="Segunda"
+                                        >
+                                            S
+                                        </ToggleGroup.Item>
+                                        <ToggleGroup.Item
+                                            value="2"
+                                            className={`h-8 w-8 rounded-lg  ${
+                                                weekDays.includes("2")
+                                                    ? "bg-violet-500"
+                                                    : "bg-zinc-900"
+                                            }`}
+                                            title="Terça"
+                                        >
+                                            T
+                                        </ToggleGroup.Item>
+                                        <ToggleGroup.Item
+                                            value="3"
+                                            className={`h-8 w-8 rounded-lg  ${
+                                                weekDays.includes("3")
+                                                    ? "bg-violet-500"
+                                                    : "bg-zinc-900"
+                                            }`}
+                                            title="Quarta"
+                                        >
+                                            Q
+                                        </ToggleGroup.Item>
+                                        <ToggleGroup.Item
+                                            value="4"
+                                            className={`h-8 w-8 rounded-lg  ${
+                                                weekDays.includes("4")
+                                                    ? "bg-violet-500"
+                                                    : "bg-zinc-900"
+                                            }`}
+                                            title="Quinta"
+                                        >
+                                            Q
+                                        </ToggleGroup.Item>
+                                        <ToggleGroup.Item
+                                            value="5"
+                                            className={`h-8 w-8 rounded-lg  ${
+                                                weekDays.includes("5")
+                                                    ? "bg-violet-500"
+                                                    : "bg-zinc-900"
+                                            }`}
+                                            title="Sexta"
+                                        >
+                                            S
+                                        </ToggleGroup.Item>
+                                        <ToggleGroup.Item
+                                            value="6"
+                                            className={`h-8 w-8 rounded-lg  ${
+                                                weekDays.includes("6")
+                                                    ? "bg-violet-500"
+                                                    : "bg-zinc-900"
+                                            }`}
+                                            title="Sabádo"
+                                        >
+                                            S
+                                        </ToggleGroup.Item>
+                                    </ToggleGroup.Root>
+                                </div>
+                            </div>
+
+                            <div className="flex flex-col flex-1 gap-2 my-3">
+                                <Label htmlFor="hourStart">
+                                    Qual horário do dia?
+                                </Label>
+
+                                <div className="grid grid-cols-2 gap-2 ">
+                                    <Input
+                                        id="hourStart"
+                                        name="hourStart"
+                                        type="time"
+                                        placeholder="De"
+                                    />
+                                    <Input
+                                        id="hourEnd"
+                                        name="hourEnd"
+                                        type="time"
+                                        placeholder="Até"
+                                    />
+                                </div>
+                            </div>
+
+                            <label className="flex items-center gap-2 my-5 mt-6 text-xs text-white md:text-sm">
+                                <Checkbox.Root
+                                    checked={useVoiceChannel}
+                                    onCheckedChange={(checked) => {
+                                        if (checked === true) {
+                                            setUseVoiceChannel(true);
+                                        } else {
+                                            setUseVoiceChannel(false);
+                                        }
+                                    }}
+                                    className="w-6 h-6 p-1 rounded bg-zinc-900"
+                                >
+                                    <Checkbox.Indicator>
+                                        <Check className="w-4 h-4 text-emerald-300" />
+                                    </Checkbox.Indicator>
+                                </Checkbox.Root>{" "}
+                                Costumo me conectar ao chat de voz
                             </label>
-                            <Input
-                                name="yearsPlaying"
-                                id="yearsPlaying"
-                                type="number"
-                                placeholder="Tudo bem ser Zero"
-                            />
                         </div>
-                        <div className="flex flex-col gap-2">
-                            <label
-                                className="text-xs md:text-base"
-                                htmlFor="discord"
-                            >
-                                Qual seu Discord?
-                            </label>
-                            <Input
-                                id="discord"
-                                name="discord"
-                                type="text"
-                                placeholder="Usuario#0000"
-                            />
-                        </div>
-                    </div>
-
-                    <div className="flex gap-6">
-                        <div className="flex flex-col gap-2">
-                            <label
-                                className="text-xs md:text-base"
-                                htmlFor="weekDays"
-                            >
-                                Quando costuma jogar?
-                            </label>
-                            <ToggleGroup.Root
-                                onValueChange={SetWeekDays}
-                                value={weekDays}
-                                type="multiple"
-                                className={`grid grid-cols-7 gap-1 `}
-                            >
-                                <ToggleGroup.Item
-                                    value="0"
-                                    className={`h-8 w-8 rounded-lg  ${
-                                        weekDays.includes("0")
-                                            ? "bg-violet-500"
-                                            : "bg-zinc-900"
-                                    }`}
-                                    title="Domingo"
-                                >
-                                    D
-                                </ToggleGroup.Item>
-                                <ToggleGroup.Item
-                                    value="1"
-                                    className={`h-8 w-8 rounded-lg  ${
-                                        weekDays.includes("1")
-                                            ? "bg-violet-500"
-                                            : "bg-zinc-900"
-                                    }`}
-                                    title="Segunda"
-                                >
-                                    S
-                                </ToggleGroup.Item>
-                                <ToggleGroup.Item
-                                    value="2"
-                                    className={`h-8 w-8 rounded-lg  ${
-                                        weekDays.includes("2")
-                                            ? "bg-violet-500"
-                                            : "bg-zinc-900"
-                                    }`}
-                                    title="Terça"
-                                >
-                                    T
-                                </ToggleGroup.Item>
-                                <ToggleGroup.Item
-                                    value="3"
-                                    className={`h-8 w-8 rounded-lg  ${
-                                        weekDays.includes("3")
-                                            ? "bg-violet-500"
-                                            : "bg-zinc-900"
-                                    }`}
-                                    title="Quarta"
-                                >
-                                    Q
-                                </ToggleGroup.Item>
-                                <ToggleGroup.Item
-                                    value="4"
-                                    className={`h-8 w-8 rounded-lg  ${
-                                        weekDays.includes("4")
-                                            ? "bg-violet-500"
-                                            : "bg-zinc-900"
-                                    }`}
-                                    title="Quinta"
-                                >
-                                    Q
-                                </ToggleGroup.Item>
-                                <ToggleGroup.Item
-                                    value="5"
-                                    className={`h-8 w-8 rounded-lg  ${
-                                        weekDays.includes("5")
-                                            ? "bg-violet-500"
-                                            : "bg-zinc-900"
-                                    }`}
-                                    title="Sexta"
-                                >
-                                    S
-                                </ToggleGroup.Item>
-                                <ToggleGroup.Item
-                                    value="6"
-                                    className={`h-8 w-8 rounded-lg  ${
-                                        weekDays.includes("6")
-                                            ? "bg-violet-500"
-                                            : "bg-zinc-900"
-                                    }`}
-                                    title="Sabádo"
-                                >
-                                    S
-                                </ToggleGroup.Item>
-                            </ToggleGroup.Root>
-                        </div>
-                    </div>
-
-                    <div className="flex flex-col flex-1 gap-2">
-                        <label
-                            className="text-xs md:text-base"
-                            htmlFor="hourStart"
-                        >
-                            Qual horário do dia?
-                        </label>
-
-                        <div className="grid grid-cols-2 gap-2">
-                            <Input
-                                id="hourStart"
-                                name="hourStart"
-                                type="time"
-                                placeholder="De"
-                            />
-                            <Input
-                                id="hourEnd"
-                                name="hourEnd"
-                                type="time"
-                                placeholder="Até"
-                            />
-                        </div>
-                    </div>
-
-                    <label className="flex items-center gap-2 mt-2 text-xs text-white md:text-sm">
-                        <Checkbox.Root
-                            checked={useVoiceChannel}
-                            onCheckedChange={(checked) => {
-                                if (checked === true) {
-                                    setUseVoiceChannel(true);
-                                } else {
-                                    setUseVoiceChannel(false);
-                                }
-                            }}
-                            className="w-6 h-6 p-1 rounded bg-zinc-900"
-                        >
-                            <Checkbox.Indicator>
-                                <Check className="w-4 h-4 text-emerald-300" />
-                            </Checkbox.Indicator>
-                        </Checkbox.Root>{" "}
-                        Costumo me conectar ao chat de voz
-                    </label>
-
-                    <footer className="grid grid-cols-1 gap-4 mt-4 md:grid-cols-2">
+                    </main>
+                    <footer className="grid grid-cols-1 gap-2 mt-4 sm:gap-4 sm:grid-cols-2">
                         <Dialog.Close
                             type="button"
-                            className="h-12 px-5 font-semibold rounded-md bg-zinc-500 hover:bg-zinc-600"
+                            className="h-8 px-5 font-semibold rounded-md sm:h-12 bg-zinc-500 hover:bg-zinc-600"
                         >
                             Cancelar
                         </Dialog.Close>
 
                         <button
                             type="submit"
-                            className="flex items-center justify-center h-12 gap-3 px-5 font-semibold rounded-md bg-violet-500 hover:bg-violet-600"
+                            className="flex items-center justify-center h-8 gap-4 px-5 font-semibold rounded-md sm:h-12 bg-violet-500 hover:bg-violet-600"
                         >
                             <GameController size={24} /> Encontrar duo
                         </button>

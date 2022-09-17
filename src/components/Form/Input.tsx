@@ -5,7 +5,7 @@ export function Input(props: Props) {
     return (
         <input
             {...props}
-            className="bg-zinc-900 py-3 px-4 rounded text-sm placeholder:text-zinc-500"
+            className="w-full px-4 py-3 text-sm rounded bg-zinc-900 placeholder:text-zinc-500"
         />
     );
 }

@@ -6,7 +6,7 @@ import { CreateAdBanner } from "./CreateAdBannerl";
 import { CreateAdModal } from "./CreateAdModal";
 import Image from "next/image";
 import { Game } from "pages/home";
-import axios from '@/lib/axios';
+import axios from "@/lib/axios";
 
 interface Props {
     gameSelected: Game | undefined;
@@ -26,13 +26,14 @@ export function GameAdsModal({ gameSelected }: Props) {
     const [ads, setAds] = useState<Ads[]>([]);
 
     useEffect(() => {
-        if (!gameSelected) return;
+        if (!gameSelected) {
+            setAds([]);
+            return;
+        }
 
-        axios(`/games/${gameSelected.id}/ads`).then(
-            (response) => {
-                setAds(response.data);
-            }
-        );
+        axios(`/games/${gameSelected.id}/ads`).then((response) => {
+            setAds(response.data);
+        });
     }, [gameSelected]);
 
     if (!gameSelected) return <></>;
@@ -42,8 +43,8 @@ export function GameAdsModal({ gameSelected }: Props) {
             <Dialog.Overlay className="fixed inset-0 bg-black/60 " />
             <Dialog.Content className="w-full h-full md:w-[80%] max-w-5xl md:max-h-[500px]  md:h-[80%] grid md:rounded-md grid-rows-[80px_minmax(100px,_1fr)] m-auto  bg-[#2a2634] shadow-2xl shadow-black/50 fixed py-6 rounded-lg px-6 text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
                 <div className="flex items-start justify-between ">
-                    <div>
-                        <Dialog.Title className="text-3xl font-black text-white">
+                    <div className="flex flex-col">
+                        <Dialog.Title className="overflow-hidden text-lg font-black text-transparent sm:text-xl md:text-2xl text-ellipsis bg-nlw-gradient bg-clip-text">
                             {gameSelected.title}
                         </Dialog.Title>
                         <Dialog.Description className="mb-8 text-sm">
@@ -58,13 +59,25 @@ export function GameAdsModal({ gameSelected }: Props) {
                 <main className="min-h-[100px] grid grid-cols-[1fr]  px-0  md:grid-cols-[1fr_1fr] overflow-auto">
                     <div className="flex items-center justify-center mb-3 rounded-xl md:overflow-hidden">
                         <div className="flex justify-center w-full h-full p-4 m-4">
-                            <Image src={gameSelected.bannerUrl} alt="" width={300} height={400} objectFit="contain" />
+                            <Image
+                                src={gameSelected.bannerUrl}
+                                alt=""
+                                width={300}
+                                height={400}
+                                objectFit="contain"
+                            />
                         </div>
                     </div>
                     <div className="md:overflow-auto">
                         {ads.length === 0 && (
                             <LabelValue label="Nenhum anúncio encontrado">
                                 Nenhum jogador interessado messe jogo no momento
+                            </LabelValue>
+                        )}
+
+                        {ads.length > 0 && (
+                            <LabelValue label="">
+                                Jogadores interessados nesse jogo
                             </LabelValue>
                         )}
 
