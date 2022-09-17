@@ -6,6 +6,8 @@ import Image from "next/image";
 import { GameBanner } from "@/components/GameBanner";
 import { BannerHome } from "@/components/BannerHome";
 import { GameModal } from "@/components/GameModal";
+import "keen-slider/keen-slider.min.css";
+import { useKeenSlider } from "keen-slider/react"; // import from 'keen-slider/react.es' for to get an ES module
 
 export interface Game {
     id: string;
@@ -18,6 +20,42 @@ export interface Game {
 function Home() {
     const [games, setGames] = useState<Game[]>([]);
     const [gameSelected, setGameSelected] = useState<Game>();
+
+    const [sliderRef, instanceRef] = useKeenSlider(
+        {
+            loop:true,
+            breakpoints: {
+                "(min-width: 200px)": {
+                    slides: { perView: 2.2, spacing: 5 },
+                },
+                "(min-width: 400px)": {
+                    slides: { perView: 2.5, spacing: 5 },
+                },
+                "(min-width: 600px)": {
+                    slides: { perView: 3.5, spacing: 5 },
+                },
+                "(min-width: 800px)": {
+                    slides: { perView: 4.5, spacing: 5 },
+                },
+                "(min-width: 1000px)": {
+                    slides: { perView: 5.5, spacing: 10 },
+                },
+                "(min-width: 1200px)": {
+                    slides: { perView: 6.5, spacing: 10 },
+                },
+            },
+            mode: "snap",
+            slides: { origin: "center", perView: 2.5, spacing: 10 },
+            range: {
+                min: -5,
+                max: 5,
+            },
+            
+        },
+        [
+            // add plugins here
+        ]
+    );
 
     useEffect(() => {
         axios("/games").then((response) => {
@@ -36,7 +74,7 @@ function Home() {
                     alt=""
                 />
 
-                <h1 className="mt-10 text-3xl font-black text-white md:text-5xl lg:text-6xl ">
+                <h1 className="my-5 text-3xl font-black text-white md:text-5xl lg:text-6xl ">
                     Seu{" "}
                     <span className="text-transparent bg-nlw-gradient bg-clip-text">
                         duo
@@ -44,15 +82,16 @@ function Home() {
                     está aqui.
                 </h1>
 
-                <div className="grid grid-cols-2 gap-6 mt-16 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+                <div ref={sliderRef} className="keen-slider">
                     {games.map((game) => (
-                        <GameBanner
-                            key={game.id}
-                            bannerUrl={game.bannerUrl}
-                            title={game.title}
-                            adsCount={game._count.ads}
-                            handleClick={() => setGameSelected(game)}
-                        />
+                        <div key={game.id} className="keen-slider__slide">
+                            <GameBanner
+                                bannerUrl={game.bannerUrl}
+                                title={game.title}
+                                adsCount={game._count.ads}
+                                handleClick={() => setGameSelected(game)}
+                            />
+                        </div>
                     ))}
                 </div>
                 <BannerHome />
