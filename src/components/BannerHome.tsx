@@ -23,7 +23,7 @@ export function BannerHome() {
 
     return (
         <div className="self-stretch pt-1 mt-8 rounded-t-lg bg-nlw-gradient ">
-            <div className="bg-[#2A2634] px-4 sm:px-8 py-6 flex ">
+            <div className="bg-[#2A2634] px-4 sm:px-8 py-6 grid grid-cols-1 gap-4 ">
                 <div className="flex-col w-full flex-2">
                     <strong className="block text-xl font-black text-white sm:text-2xl">
                         Não encontrou seu duo?
@@ -34,7 +34,7 @@ export function BannerHome() {
                     </span>
                 </div>
 
-                <div className="justify-end flex-1 hidden text-white w-44 sm:flex ">
+                <div className="justify-end flex-1 text-white w-44 sm:flex ">
                     {!session && (
                         <button
                             onClick={SignInDiscord}
@@ -42,12 +42,12 @@ export function BannerHome() {
                             className="flex items-center justify-center w-full px-4 py-2 text-base font-semibold text-center text-white transition duration-200 ease-in rounded-lg shadow-md bg-slate-600 hover:bg-slate-700 focus:ring-slate-500 focus:ring-offset-slate-200 focus:outline-none focus:ring-2 focus:ring-offset-2 "
                         >
                             <DiscordLogo className="mx-2 text-2xl" />
-                            Login 
+                            Login
                         </button>
                     )}
                     {session && (
                         <div>
-                            <div className="flex border-4 min-w-[80px] min-h-[80px] border-transparent rounded-full select-none hover:border-dark-brand-primary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                            <div className="flex items-center gap-3 border-4 min-w-[80px] min-h-[80px] border-transparent rounded-full select-none hover:border-dark-brand-primary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                                 {session?.user?.image ? (
                                     <Image
                                         className="border-2 rounded-full hover:border-dark-brand-primary"
@@ -64,10 +64,10 @@ export function BannerHome() {
                                             .toUpperCase()}
                                     </div>
                                 )}
-                            </div>
-                            {/* <div>{session?.user.name}</div> */}
-                            <div className="flex justify-center">
-                                <button onClick={Logoff}>Sair</button>
+                                {/* <div>{session?.user.name}</div> */}
+                                <div>
+                                    <button onClick={Logoff}>Sair</button>
+                                </div>
                             </div>
                         </div>
                     )}

@@ -1,34 +1,102 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+<p align="center">
+  <a href="#-tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-como-executar">Como executar</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-projeto">Projeto</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-layout">Layout Original</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-nextlevel">Próximo Nível</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-license">License</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+</p>
+<br/><br/>
 
-First, run the development server:
+<p align="center">
+  <img alt="FeedWidget" src="https://user-images.githubusercontent.com/21183446/190916328-2af9a8cb-7420-4e02-ac37-10a42499499d.png" width="70%" />
+</p>
+
+<br/><br/>
+
+
+
+<p align="center">
+  <img alt="" src="https://user-images.githubusercontent.com/21183446/190916326-893c26ee-b560-4468-8c14-b1fea9391200.png" />
+</p>
+
+
+
+
+
+## 🧪 Tecnologias
+
+Esse projeto foi desenvolvido com as seguintes tecnologias:
+
+- [Next](https://nextjs.org/)
+- [Prisma](https://www.prisma.io)
+- [Tailwindcss](https://tailwindcss.com)
+- [TypeScript](https://www.typescriptlang.org)
+
+
+
+[VEJA O PROJETO FUNCIONANDO](https://duoesports.vercel.app)
+
+
+
+
+## 🚀 Como executar
+
+Clone o repositório e acesse a pasta.
 
 ```bash
-npm run dev
-# or
-yarn dev
+$ git clone https://github.com/devmaicon85/nlwEsports
+
+Para iniciar o projeto:
+
+```bash
+
+# Instalar as dependências
+$ npm install
+
+# Faça uma copia do arquivo `.env.example` para `.env` e informe suas credenciais de banco de dados e login discord
+
+# Iniciar o projeto
+$ npm run dev
+
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+A aplicação pode ser acessada em [`localhost:3000`](http://localhost:3000).
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## 💻 Projeto
+O projeto auxilia encontrar novos jogadores dos seus games favoritos. 
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+## 🔖 Layout
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Veja o layout do projeto original através do figma abaixo:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- [Layout Web](https://www.figma.com/community/file/1150897317533332617)
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🚀 NextLevel
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+ALGUMAS MELHORIAS REALIZADAS
+
+- Mudança de React + Node para NextJS
+- Login com Discord
+- Responsividade
+- Hospedagem Web
+- Hospedagem Mysql no Planetscale
+- Carrossel Games usando KeenSlides
+- Criação de Anúncios pelo projeto Web
+- Validação Front e BackEnd
+- Página 404
+
+
+
+## 📝 License
+
+Esse projeto está sob a licença MIT.
+
+---
+
+Feito com 💜 por mim no projeto 👋🏻 [da NLW Esports da Rocketseat](https://www.rocketseat.com.br/)

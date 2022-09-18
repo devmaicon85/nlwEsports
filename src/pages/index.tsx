@@ -4,14 +4,12 @@ import { getSession } from "next-auth/react";
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
     const session = await getSession({ req });
 
-    if (!session) {
-        return {
-            redirect: {
-                destination: "/home",
-                permanent: false,
-            },
-        };
-    }
+    return {
+        redirect: {
+            destination: "/home",
+            permanent: false,
+        },
+    };
 
     // if (session) {
     //     return {
