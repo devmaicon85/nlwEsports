@@ -23,6 +23,7 @@ interface Ads {
     yearsPlaying: number;
     hourStart: number;
     hourEnd: number;
+    discord?: string;
 }
 
 export function GameModal({ gameSelected }: Props) {
@@ -32,6 +33,7 @@ export function GameModal({ gameSelected }: Props) {
 
     const [modalCreateAd, setModalCreateAd] = useState(false);
 
+    
     useEffect(() => {
         if (!gameSelected) {
             setAds([]);
@@ -45,19 +47,31 @@ export function GameModal({ gameSelected }: Props) {
         });
     }, [gameSelected]);
 
+    // const daysWeekString = ["D", "S", "T", "Q", "Q", "S", "S"];
+
     useEffect(() => {
         async function getDiscord() {
             if (!adSelected) return;
 
-            await axios.get(`/ad/${adSelected}/discord`).then((response) => {
-                toast.success("Discord do usuário: " + response.data.discord, {
-                    autoClose: false,
+            await axios
+                .get(`/players/${adSelected}/discord`)
+                .then((response) => {
+                    // atualiza state de anuncios
+                    const newAds = ads.map((ad) => {
+                        if (ad.id === adSelected) {
+                            ad.discord = response.data.discord;
+                        }
+
+                        return ad;
+                    });
+
+                    setAds(newAds);
+                    setAdSelected(null);
                 });
-            });
         }
 
         getDiscord();
-    }, [adSelected]);
+    }, [adSelected, ads]);
 
     if (!gameSelected) return <></>;
 
@@ -94,7 +108,7 @@ export function GameModal({ gameSelected }: Props) {
                     <div className="md:overflow-auto">
                         {ads.length === 0 && (
                             <LabelValue label="Nenhum anúncio encontrado">
-                                Nenhum jogador interessado messe jogo no momento
+                                Nenhum jogador interessado nesse jogo no momento
                             </LabelValue>
                         )}
 
@@ -113,29 +127,39 @@ export function GameModal({ gameSelected }: Props) {
                                     }
                                 >
                                     <LabelValue label="Name">
-                                        <div className="flex justify-between">
-                                            {ad.name}{" "}
+                                        {ad.name}
+                                    </LabelValue>
+
+                                    <LabelValue label="Discord">
+                                        <div
+                                            onClick={() => setAdSelected(ad.id)}
+                                            className="flex items-center gap-3 hover:cursor-pointer"
+                                        >
                                             <FaDiscord
-                                                onClick={() =>
-                                                    setAdSelected(ad.id)
-                                                }
                                                 title="mostrar discord do usuário"
-                                                className="text-white w-7 h-7 hover:text-blue-800 hover:cursor-pointer"
+                                                className="text-blue-300 w-7 h-7"
                                             />
+                                            <div className="text-sm font-light">
+                                                {ad.discord ??
+                                                    "clique para visualizar"}
+                                            </div>
                                         </div>
                                     </LabelValue>
+
                                     <LabelValue label="Tempo de Jogo">
-                                        {ad.yearsPlaying} ano(s)
+                                        {ad.yearsPlaying > 0 ? ad.yearsPlaying + " ano(s)" : "recente"} 
                                     </LabelValue>
                                     <LabelValue label="Disponibilizade">
-                                        {ad.weekDays.length} dia(s) -{" "}
-                                        {convertMinutesNumberToHoursString(
-                                            ad.hourStart
-                                        )}{" "}
-                                        -{" "}
-                                        {convertMinutesNumberToHoursString(
-                                            ad.hourEnd
-                                        )}
+                                        <div>{ad.weekDays}</div>
+                                        <div className="text-sm font-normal">
+                                            {convertMinutesNumberToHoursString(
+                                                ad.hourStart
+                                            )}{" "}
+                                            -{" "}
+                                            {convertMinutesNumberToHoursString(
+                                                ad.hourEnd
+                                            )}
+                                        </div>
                                     </LabelValue>
                                     <LabelValue label="Chamada de áudio">
                                         <span

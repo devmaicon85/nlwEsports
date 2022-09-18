@@ -11,10 +11,12 @@ import { Game } from "../pages/home";
 import { Router, useRouter } from "next/router";
 import { Label } from "./Form/Label";
 import { useSession } from "next-auth/react";
+import { ToggleGroupItem } from "./Form/ToggleGroupItem";
+import { toast } from "react-toastify";
 
 interface Props {
     game: Game;
-    handleClose:()=>void
+    handleClose: () => void;
 }
 export function CreateAdModal({ game, handleClose }: Props) {
     // const [games, setGames] = useState<Game[]>([]);
@@ -44,39 +46,38 @@ export function CreateAdModal({ game, handleClose }: Props) {
         // console.log("weekDays....", weekDays);
         // console.log("useVoiceChannel....", useVoiceChannel);
 
-        if (!game.id) {
-            return alert("game é obrigatório");
-        }
-
         if (!data.name) {
-            return alert("name é obrigatório");
+            return toast.error("Informe seu Nome");
         }
 
         if (!data.discord) {
-            return alert("discord é obrigatório");
+            return toast.error("Informe seu Discord");
         }
         if (weekDays.length === 0) {
-            return alert("selecione pelo menos um dia");
+            return toast.error("Selecione pelo menos um dia");
+        }
+
+        if (data.hourStart === "" || data.hourEnd === "") {
+            return toast.error("Informe um horário disponível");
         }
 
         try {
             await axios.post(`/games/${game.id}/ads`, {
                 name: data.name,
                 discord: data.discord,
-                weekDays: weekDays.map(Number),
+                weekDays: weekDays.map(String),
                 useVoiceChannel: useVoiceChannel,
                 yearsPlaying: Number(data.yearsPlaying),
                 hourStart: data.hourStart,
                 hourEnd: data.hourEnd,
             });
 
-            alert("Anúncio criado com sucesso");
-            router.push('/home')
+            toast.success("Anúncio criado com sucesso");
+            router.push("/home");
             handleClose();
-            
         } catch (error) {
             console.log(error);
-            alert("Erro ao criar anúncio");
+            toast.error("Erro ao criar anúncio. Tente novamente mais tarde");
         }
     }
 
@@ -85,7 +86,7 @@ export function CreateAdModal({ game, handleClose }: Props) {
             <Dialog.Overlay className="fixed inset-0 bg-black/60" />
             <Dialog.Content className="bg-[#2a2634] shadow-2xl shadow-black/50   fixed py-8 max-w-[480px] w-full rounded-lg px-4 md:px-10 text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
                 <form onSubmit={handleCreateAd} className="flex flex-col gap-4">
-                    <main className="flex flex-col max-h-[60vh] gap-4 overflow-y-auto">
+                    <main className="flex flex-col max-h-[60vh] gap-4 overflow-auto">
                         <Dialog.Title className="text-sm font-black text-white sm:text-base ">
                             Publique seu anúncio
                             <div className="text-3xl font-black text-transparent bg-nlw-gradient bg-clip-text">
@@ -104,7 +105,9 @@ export function CreateAdModal({ game, handleClose }: Props) {
                                     type="text"
                                     placeholder="Como te chamam dentro do game?"
                                     value={userName}
-                                    onChange={(e)=>setUserName(e.target.value)}
+                                    onChange={(e) =>
+                                        setUserName(e.target.value)
+                                    }
                                 />
                             </div>
 
@@ -132,7 +135,9 @@ export function CreateAdModal({ game, handleClose }: Props) {
                                         type="text"
                                         placeholder="Usuario#0000"
                                         value={userDiscord}
-                                        onChange={(e)=>setUserDiscord(e.target.value)}
+                                        onChange={(e) =>
+                                            setUserDiscord(e.target.value)
+                                        }
                                     />
                                 </div>
                             </div>
@@ -140,91 +145,76 @@ export function CreateAdModal({ game, handleClose }: Props) {
                             <div className="flex gap-6">
                                 <div className="flex flex-col gap-2 my-3">
                                     <Label htmlFor="weekDays">
-                                        Quando costuma jogar?
+                                        Disponibilidade para jogar?
                                     </Label>
                                     <ToggleGroup.Root
                                         onValueChange={SetWeekDays}
                                         value={weekDays}
                                         type="multiple"
-                                        className={`grid grid-cols-7 gap-1 mx-2 `}
+                                        className={`grid grid-cols-7 text-xs`}
                                     >
-                                        <ToggleGroup.Item
-                                            value="0"
-                                            className={`h-8 w-8 rounded-lg  ${
-                                                weekDays.includes("0")
-                                                    ? "bg-violet-500"
-                                                    : "bg-zinc-900"
-                                            }`}
+                                        <ToggleGroupItem
+                                            name="Dom"
+                                            value="Dom"
                                             title="Domingo"
-                                        >
-                                            D
-                                        </ToggleGroup.Item>
-                                        <ToggleGroup.Item
-                                            value="1"
-                                            className={`h-8 w-8 rounded-lg  ${
-                                                weekDays.includes("1")
-                                                    ? "bg-violet-500"
-                                                    : "bg-zinc-900"
-                                            }`}
+                                            selected={
+                                                weekDays.includes("Dom") && true
+                                            }
+                                        />
+
+                                        <ToggleGroupItem
+                                            name="Seg"
+                                            value="Seg"
                                             title="Segunda"
-                                        >
-                                            S
-                                        </ToggleGroup.Item>
-                                        <ToggleGroup.Item
-                                            value="2"
-                                            className={`h-8 w-8 rounded-lg  ${
-                                                weekDays.includes("2")
-                                                    ? "bg-violet-500"
-                                                    : "bg-zinc-900"
-                                            }`}
+                                            selected={
+                                                weekDays.includes("Seg") && true
+                                            }
+                                        />
+
+                                        <ToggleGroupItem
+                                            name="Ter"
+                                            value="Ter"
                                             title="Terça"
-                                        >
-                                            T
-                                        </ToggleGroup.Item>
-                                        <ToggleGroup.Item
-                                            value="3"
-                                            className={`h-8 w-8 rounded-lg  ${
-                                                weekDays.includes("3")
-                                                    ? "bg-violet-500"
-                                                    : "bg-zinc-900"
-                                            }`}
+                                            selected={
+                                                weekDays.includes("Ter") && true
+                                            }
+                                        />
+
+                                        <ToggleGroupItem
+                                            name="Qua"
+                                            value="Qua"
                                             title="Quarta"
-                                        >
-                                            Q
-                                        </ToggleGroup.Item>
-                                        <ToggleGroup.Item
-                                            value="4"
-                                            className={`h-8 w-8 rounded-lg  ${
-                                                weekDays.includes("4")
-                                                    ? "bg-violet-500"
-                                                    : "bg-zinc-900"
-                                            }`}
+                                            selected={
+                                                weekDays.includes("Qua") && true
+                                            }
+                                        />
+
+                                        <ToggleGroupItem
+                                            name="Qui"
+                                            value="Qui"
                                             title="Quinta"
-                                        >
-                                            Q
-                                        </ToggleGroup.Item>
-                                        <ToggleGroup.Item
-                                            value="5"
-                                            className={`h-8 w-8 rounded-lg  ${
-                                                weekDays.includes("5")
-                                                    ? "bg-violet-500"
-                                                    : "bg-zinc-900"
-                                            }`}
+                                            selected={
+                                                weekDays.includes("Qui") && true
+                                            }
+                                        />
+
+                                        <ToggleGroupItem
+                                            name="Sex"
+                                            value="Sex"
                                             title="Sexta"
-                                        >
-                                            S
-                                        </ToggleGroup.Item>
-                                        <ToggleGroup.Item
-                                            value="6"
-                                            className={`h-8 w-8 rounded-lg  ${
-                                                weekDays.includes("6")
-                                                    ? "bg-violet-500"
-                                                    : "bg-zinc-900"
-                                            }`}
-                                            title="Sabádo"
-                                        >
-                                            S
-                                        </ToggleGroup.Item>
+                                            selected={
+                                                weekDays.includes("Sex") && true
+                                            }
+                                        />
+
+                                        <ToggleGroupItem
+                                            name="Sáb"
+                                            value="Sab"
+                                            title="Sábado"
+                                            selected={
+                                                weekDays.includes("Sab") && true
+                                            }
+                                        />
                                     </ToggleGroup.Root>
                                 </div>
                             </div>

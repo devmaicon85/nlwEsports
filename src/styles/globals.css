@@ -3,10 +3,7 @@
 @tailwind components;
 @tailwind utilities; /*ultimo*/
 
-:root {
-    --color-primary: green;
-    --color-danger: #ce0000;
-}
+
 
 @layer components {
     html,
@@ -18,8 +15,6 @@
     body {
         font-family: Inter, Arial, Helvetica, sans-serif;
     }
-
-    
 }
 
 /* width */

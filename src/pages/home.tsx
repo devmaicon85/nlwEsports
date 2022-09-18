@@ -76,6 +76,11 @@ function Home({ games }: Props) {
     if (!games) return <></>;
     return (
         <div className="bg-[#121214] bg-galaxy bg-[length:100%] md:bg-cover bg-no-repeat bg-top w-full min-h-screen">
+            <ToastContainer
+                theme={"dark"}
+                position="bottom-center"
+                autoClose={5000}
+            />
             <div className="max-w-[1344px] mx-auto px-4 sm:px-8 md:px-10 flex items-center flex-col my-10 mb-20">
                 <Image
                     src="/assets/logo.png"
@@ -111,14 +116,9 @@ function Home({ games }: Props) {
                     open={!!gameSelected?.id}
                     onOpenChange={() => setGameSelected(undefined)}
                 >
-                    <GameModal gameSelected={gameSelected}  />
+                    <GameModal gameSelected={gameSelected} />
                 </Dialog.Root>
             </div>
-            <ToastContainer
-                theme={"dark"}
-                position="bottom-center"
-                autoClose={5000}
-            />
         </div>
     );
 }

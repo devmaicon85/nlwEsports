@@ -7,6 +7,26 @@ export async function addAds(req: NextApiRequest, res: NextApiResponse) {
         const gameId = String(req.query.id);
         const body: any = req.body;
 
+        if(!body.name){
+            throw new Error('Nome não informado')
+        }
+
+        if(!body.discord){
+            throw new Error('Discord não informado')
+        }
+
+        if(!body.weekDays){
+            throw new Error('Dias disponibilidade não informado')
+        }
+
+        if(!body.hourStart){
+            throw new Error('Horário de início não informado')
+        }
+
+        if(!body.hourEnd){
+            throw new Error('Horário Final não informado')
+        }
+
         const ad = await prismaClient.ad.create({
             data: {
                 gameId,
