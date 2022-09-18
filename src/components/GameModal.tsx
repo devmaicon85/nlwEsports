@@ -7,6 +7,9 @@ import { CreateAdModal } from "./CreateAdModal";
 import Image from "next/image";
 import { Game } from "pages/home";
 import axios from "@/lib/axios";
+import { convertMinutesNumberToHoursString } from "./../utils/convert-minutes-number-to-hour-string";
+import { FaDiscord } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 interface Props {
     gameSelected: Game | undefined;
@@ -18,12 +21,14 @@ interface Ads {
     weekDays: string[];
     useVoiceChannel: boolean;
     yearsPlaying: number;
-    hourStart: string;
-    hourEnd: string;
+    hourStart: number;
+    hourEnd: number;
 }
 
 export function GameModal({ gameSelected }: Props) {
     const [ads, setAds] = useState<Ads[]>([]);
+
+    const [adSelected, setAdSelected] = useState<string | null>(null);
 
     const [modalCreateAd, setModalCreateAd] = useState(false);
 
@@ -33,10 +38,26 @@ export function GameModal({ gameSelected }: Props) {
             return;
         }
 
+        setAdSelected(null);
+
         axios(`/games/${gameSelected.id}/ads`).then((response) => {
             setAds(response.data);
         });
     }, [gameSelected]);
+
+    useEffect(() => {
+        async function getDiscord() {
+            if (!adSelected) return;
+
+            await axios.get(`/ad/${adSelected}/discord`).then((response) => {
+                toast.success("Discord do usuário: " + response.data.discord, {
+                    autoClose: false,
+                });
+            });
+        }
+
+        getDiscord();
+    }, [adSelected]);
 
     if (!gameSelected) return <></>;
 
@@ -79,7 +100,7 @@ export function GameModal({ gameSelected }: Props) {
 
                         {ads.length > 0 && (
                             <LabelValue label="">
-                                Jogadores interessados nesse jogo
+                                Jogadores interessados
                             </LabelValue>
                         )}
 
@@ -92,14 +113,29 @@ export function GameModal({ gameSelected }: Props) {
                                     }
                                 >
                                     <LabelValue label="Name">
-                                        {ad.name}
+                                        <div className="flex justify-between">
+                                            {ad.name}{" "}
+                                            <FaDiscord
+                                                onClick={() =>
+                                                    setAdSelected(ad.id)
+                                                }
+                                                title="mostrar discord do usuário"
+                                                className="text-white w-7 h-7 hover:text-blue-800 hover:cursor-pointer"
+                                            />
+                                        </div>
                                     </LabelValue>
                                     <LabelValue label="Tempo de Jogo">
                                         {ad.yearsPlaying} ano(s)
                                     </LabelValue>
                                     <LabelValue label="Disponibilizade">
                                         {ad.weekDays.length} dia(s) -{" "}
-                                        {ad.hourStart} - {ad.hourEnd}
+                                        {convertMinutesNumberToHoursString(
+                                            ad.hourStart
+                                        )}{" "}
+                                        -{" "}
+                                        {convertMinutesNumberToHoursString(
+                                            ad.hourEnd
+                                        )}
                                     </LabelValue>
                                     <LabelValue label="Chamada de áudio">
                                         <span
@@ -120,7 +156,7 @@ export function GameModal({ gameSelected }: Props) {
 
                 <footer className="flex flex-col items-end justify-between gap-4 mt-2 ">
                     <Dialog.Root
-                        open={modalCreateAd ===true}
+                        open={modalCreateAd === true}
                         onOpenChange={() => setModalCreateAd(!modalCreateAd)}
                     >
                         <div className="self-stretch w-full h-1 mt-4 bg-nlw-gradient"></div>

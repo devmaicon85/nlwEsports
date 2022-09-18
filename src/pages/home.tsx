@@ -11,6 +11,9 @@ import { useKeenSlider } from "keen-slider/react"; // import from 'keen-slider/r
 import { games } from "@/lib/api/public/games";
 import { GetServerSideProps } from "next";
 
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.min.css";
+
 export interface Game {
     id: string;
     title: string;
@@ -111,6 +114,11 @@ function Home({ games }: Props) {
                     <GameModal gameSelected={gameSelected}  />
                 </Dialog.Root>
             </div>
+            <ToastContainer
+                theme={"dark"}
+                position="bottom-center"
+                autoClose={5000}
+            />
         </div>
     );
 }
