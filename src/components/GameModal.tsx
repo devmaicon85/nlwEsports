@@ -30,24 +30,23 @@ export function GameModal({ gameSelected }: Props) {
     const [ads, setAds] = useState<Ads[]>([]);
 
     const [adSelected, setAdSelected] = useState<string | null>(null);
-
     const [modalCreateAd, setModalCreateAd] = useState(false);
 
-    
-    useEffect(() => {
+    function getGameSelected() {
         if (!gameSelected) {
             setAds([]);
             return;
         }
 
-        setAdSelected(null);
-
+        // busca anuncios do game selecionado
         axios(`/games/${gameSelected.id}/ads`).then((response) => {
             setAds(response.data);
         });
-    }, [gameSelected]);
-
-    // const daysWeekString = ["D", "S", "T", "Q", "Q", "S", "S"];
+    }
+    useEffect(() => {
+        getGameSelected();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     useEffect(() => {
         async function getDiscord() {
@@ -147,7 +146,9 @@ export function GameModal({ gameSelected }: Props) {
                                     </LabelValue>
 
                                     <LabelValue label="Tempo de Jogo">
-                                        {ad.yearsPlaying > 0 ? ad.yearsPlaying + " ano(s)" : "recente"} 
+                                        {ad.yearsPlaying > 0
+                                            ? ad.yearsPlaying + " ano(s)"
+                                            : "recente"}
                                     </LabelValue>
                                     <LabelValue label="Disponibilizade">
                                         <div>{ad.weekDays}</div>
@@ -181,7 +182,9 @@ export function GameModal({ gameSelected }: Props) {
                 <footer className="flex flex-col items-end justify-between gap-4 mt-2 ">
                     <Dialog.Root
                         open={modalCreateAd === true}
-                        onOpenChange={() => setModalCreateAd(!modalCreateAd)}
+                        onOpenChange={() => {
+                            setModalCreateAd(!modalCreateAd);
+                        }}
                     >
                         <div className="self-stretch w-full h-1 mt-4 bg-nlw-gradient"></div>
 
@@ -204,7 +207,10 @@ export function GameModal({ gameSelected }: Props) {
 
                         <CreateAdModal
                             game={gameSelected}
-                            handleClose={() => setModalCreateAd(false)}
+                            handleClose={() => {
+                                setModalCreateAd(false);
+                                getGameSelected();
+                            }}
                         />
                     </Dialog.Root>
                 </footer>

@@ -47,18 +47,19 @@ export function BannerHome() {
                     )}
                     {session && (
                         <div>
-                            <div className="flex items-center gap-3 border-4 min-w-[80px] min-h-[80px] border-transparent rounded-full select-none hover:border-dark-brand-primary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                            <div className="flex items-center gap-3 border-4 min-w-[50px] min-h-[50px] border-transparent rounded-full select-none  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                                 {session?.user?.image ? (
                                     <Image
-                                        className="border-2 rounded-full hover:border-dark-brand-primary"
+                                        className="border-2 rounded-full "
                                         src={session?.user?.image}
                                         alt="Usuário"
-                                        width={80}
-                                        height={80}
+                                        title={session.user.username}
+                                        width={50}
+                                        height={50}
                                     />
                                 ) : (
                                     // <FaUserCircle className="w-8 h-8 opacity-40" />
-                                    <div className="flex items-center justify-center w-8 h-8 m-1 font-serif font-semibold text-white rounded-full bg-dark-brand-primary">
+                                    <div className="flex items-center justify-center w-8 h-8 m-1 font-serif font-semibold text-white rounded-full ">
                                         {session.user.name
                                             ?.charAt(0)
                                             .toUpperCase()}
