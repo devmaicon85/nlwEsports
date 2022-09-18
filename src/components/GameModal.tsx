@@ -93,13 +93,13 @@ export function GameModal({ gameSelected }: Props) {
                 </div>
 
                 <main className="min-h-[100px] grid grid-cols-[1fr]  px-0  md:grid-cols-[1fr_1fr] overflow-auto">
-                    <div className="flex items-center justify-center mb-3 rounded-xl md:overflow-hidden">
-                        <div className="flex justify-center w-full h-full p-4 m-4">
+                    <div className="flex items-center justify-center mx-3 rounded-xl md:overflow-hidden">
+                        <div className="flex justify-center w-full h-full px-4 mx-4">
                             <Image
                                 src={gameSelected.bannerUrl}
                                 alt=""
-                                width={300}
-                                height={400}
+                                width={200}
+                                height={300}
                                 objectFit="contain"
                             />
                         </div>
@@ -111,11 +111,11 @@ export function GameModal({ gameSelected }: Props) {
                             </LabelValue>
                         )}
 
-                        {ads.length > 0 && (
+                        {/* {ads.length > 0 && (
                             <LabelValue label="">
                                 Jogadores interessados
                             </LabelValue>
-                        )}
+                        )} */}
 
                         {ads.map((ad) => {
                             return (
