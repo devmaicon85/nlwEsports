@@ -90,13 +90,16 @@ function Home({ games }: Props) {
                     alt=""
                 />
 
-                <h1 className="my-5 text-3xl font-black text-white md:text-5xl lg:text-6xl ">
+                <h1 className="text-3xl font-black text-white md:text-5xl lg:text-6xl ">
                     Seu{" "}
                     <span className="text-transparent bg-nlw-gradient bg-clip-text">
                         duo
                     </span>{" "}
                     está aqui.
                 </h1>
+             
+
+                <hr className="my-5"/>
 
                 <div ref={sliderRef} className="keen-slider">
                     {games.map((game) => (
@@ -111,6 +114,15 @@ function Home({ games }: Props) {
                     ))}
                 </div>
                 <BannerHome />
+
+                <a
+                    rel="noreferrer"
+                    href="https://github.com/devmaicon85/nlwEsports"
+                    target="_blank"
+                    className="my-10 text-white hover:underline"
+                >
+                    Github do Projeto
+                </a>
 
                 <Dialog.Root
                     open={!!gameSelected?.id}
