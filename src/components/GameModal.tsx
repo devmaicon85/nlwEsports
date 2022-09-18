@@ -46,7 +46,7 @@ export function GameModal({ gameSelected }: Props) {
     useEffect(() => {
         getGameSelected();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [gameSelected]);
 
     useEffect(() => {
         async function getDiscord() {
