@@ -23,6 +23,19 @@
 
 
 
+## 🚀 NextLevel
+
+ALGUMAS MELHORIAS REALIZADAS
+
+- Mudança de React & Node para NextJS
+- Hospedagem Web na Vercel
+- Hospedagem Banco MYSQL no Planetscale
+- Login com Discord
+- Responsividade
+- Carrossel Games usando KeenSlides
+- Criação de Anúncios pela Web
+- Validação Front e BackEnd
+- Página 404
 
 
 ## 🧪 Tecnologias
@@ -77,19 +90,6 @@ Veja o layout do projeto original através do figma abaixo:
 - [Layout Web](https://www.figma.com/community/file/1150897317533332617)
 
 
-## 🚀 NextLevel
-
-ALGUMAS MELHORIAS REALIZADAS
-
-- Mudança de React + Node para NextJS
-- Login com Discord
-- Responsividade
-- Hospedagem Web
-- Hospedagem Mysql no Planetscale
-- Carrossel Games usando KeenSlides
-- Criação de Anúncios pelo projeto Web
-- Validação Front e BackEnd
-- Página 404
 
 
 
