@@ -21,17 +21,16 @@ export const authOptions = {
             authorization: { params: { scope: "identify" } },
 
             profile(profile) {
-                console.log(
-                    "🚀 ~ file: [...nextauth].ts ~ line 22 ~ profile ~ profile",
-                    profile
-                );
-
+                console.log("🚀 ~ file: [...nextauth].ts ~ line 24 ~ profile ~ profile", profile)
+                
                 return {
                     id: profile.id.toString(),
                     name: profile.username,
                     username: `${profile.username}#${profile.discriminator}`,
                     email: profile.email,
-                    image: `https://cdn.discordapp.com/avatars/${profile.id}/${profile.avatar}.png`,
+                    image: profile.avatar
+                        ? `https://cdn.discordapp.com/avatars/${profile.id}/${profile.avatar}.png`
+                        : null,
                 };
             },
         }),

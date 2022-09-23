@@ -58,14 +58,10 @@ export function BannerHome() {
                                         height={50}
                                     />
                                 ) : (
-                                    // <FaUserCircle className="w-8 h-8 opacity-40" />
-                                    <div className="flex items-center justify-center w-8 h-8 m-1 font-serif font-semibold text-white rounded-full ">
-                                        {session.user.name
-                                            ?.charAt(0)
-                                            .toUpperCase()}
+                                    <div className="flex items-center justify-center p-2 font-serif text-sm font-semibold text-center text-white text-opacity-50 rounded-full bg-slate-600 hover:bg-slate-700 focus:ring-slate-500 focus:ring-offset-slate-200 focus:outline-none focus:ring-2 focus:ring-offset-2 ">
+                                        {session.user.name}
                                     </div>
                                 )}
-                                {/* <div>{session?.user.name}</div> */}
                                 <div>
                                     <button onClick={Logoff}>Sair</button>
                                 </div>
