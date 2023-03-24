@@ -31,7 +31,7 @@ function Home({ games }: Props) {
     // const [games, setGames] = useState<Game[]>([]);
     const [gameSelected, setGameSelected] = useState<Game>();
 
-    const [sliderRef, instanceRef] = useKeenSlider(
+    const [sliderRef] = useKeenSlider(
         {
             loop: true,
             breakpoints: {
@@ -56,15 +56,8 @@ function Home({ games }: Props) {
             },
             mode: "free",
             slides: { origin: "center", perView: 5.5, spacing: 10 },
-            // range: {
-            //     min: 1,
-            //     max: 100,
-            //     align: true,
-            // },
-        },
-        [
-            // add plugins here
-        ]
+           
+        }
     );
 
     // useEffect(() => {
